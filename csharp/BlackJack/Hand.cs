@@ -8,10 +8,10 @@ namespace BlackJack
     {
         protected Card LastDrawnCard { get; set; }
         public List<Card> Cards { get; } = new List<Card>();
-        public int Total => Cards.Sum(c => Math.Min(c.Rank, 10));
+        public int Total => Cards.Sum(c => Math.Min(c.Rank, 11));
         public virtual bool IsClosed { get; }
-        public bool BlackJack => Cards.Sum(c => Math.Min(c.Rank, 10)) == 21;
-        public bool IsFat => Cards.Sum(c => Math.Min(c.Rank, 10)) > 21;
+        public bool BlackJack => Cards.Sum(c => Math.Min(c.Rank, 11)) == 21;
+        public bool IsFat => Cards.Sum(c => Math.Min(c.Rank, 11)) > 21;
 
         public Hand AddCard(Card card)
         {
@@ -36,8 +36,8 @@ namespace BlackJack
             if (card.Rank != 14)
                 return;
 
-            if (Total < 12)
-                card.Rank = 10;
+            if(Total + card.Rank > 21)
+                card.Rank = 11;
             else
                 card.Rank = 1;
         }

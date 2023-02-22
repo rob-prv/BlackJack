@@ -6,7 +6,7 @@ namespace BlackJack
     public class PlayerHand : Hand
     {
         private bool _stand;
-        public override bool IsClosed => _stand || Cards.Sum(c => Math.Min(c.Rank, 10)) >= 21;
+        public override bool IsClosed => _stand || Cards.Sum(c => Math.Min(c.Rank, 11)) >= 21;
 
         public Hand CloseHand()
         {

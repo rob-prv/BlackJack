@@ -18,7 +18,7 @@
                 case 14:
                     return "A of " + Suit;
                 default:
-                    return Rank.ToString() + " of " + Suit;
+                    return Rank + " of " + Suit;
             }
         }
     }
