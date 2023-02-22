@@ -1,31 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 
 namespace BlackJack
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var deck = new Deck();
-            var hand = new List<Card>();
+            var game = new BlackJackGame(new Dealer(new Deck(), new DealerHand(), new Player(new PlayerHand()))); 
+            // more ideal with factory
 
-            while (true)
+            while (game.Phase != GamePhase.Finished)
             {
-                Console.WriteLine("Stand, Hit");
-                string read = Console.ReadLine();
-                if (read == "Hit")
+                if(game.Phase == GamePhase.DealersTurn)
+                    Thread.Sleep(1000);
+
+                foreach (var hand in game.StartDealing())
+                    Console.WriteLine(hand);
+
+                PlayerAction action;
+                if (game.Phase == GamePhase.PlayersTurn)
+                    action = InputHelper.GetPlayerAction("Stand, Hit");
+                else
+                    action = PlayerAction.Hit;
+
+                var updatedHand = game.HitOrStand(action);
+
+                if (updatedHand?.BlackJack == true)
+                    Console.WriteLine(updatedHand);
+
+                else if (updatedHand?.BlackJack == false)
+                    Console.WriteLine(updatedHand);
+
+                if (game.Phase == GamePhase.Finished)
                 {
-                    var card = deck.Cards.Dequeue();
-                    hand.Add(card);
-                    var total = hand.Sum(x => Math.Min(x.Rank, 10));
-                    Console.WriteLine("Hit with {0} {1}. Total is {2}", card.Suit, card.Rank, total);
-                }
-                else if (read == "Stand")
-                {
-                    break;
+                    Thread.Sleep(700);
+                    Console.WriteLine(game.GetWinner());
+
+                    Console.WriteLine("Play again? Yes, No");
+                    var answer = Console.ReadLine()?.ToUpper();
+                    if (answer == "YES")
+                        game.Restart();
                 }
             }
         }
