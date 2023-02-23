@@ -12,8 +12,15 @@ namespace BlackJack.Tests
             When();
         }
 
-        public virtual void Given() { }
+        [TearDown]
+        public void Teardown()
+        {
+            TearDown();
+        }
 
-        public virtual void When() { }
+        public abstract void Given();
+
+        public abstract void When();
+        public abstract void TearDown();
     }
 }

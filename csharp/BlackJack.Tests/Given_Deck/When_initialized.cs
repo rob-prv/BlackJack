@@ -24,6 +24,15 @@ namespace BlackJack.Tests.Given_Deck
             _cardOrderIsEqual = _deck.Cards.SequenceEqual(_deckTwo.Cards);
         }
 
+        public override void TearDown()
+        {
+            _deck = null;
+            _deckTwo = null;
+            _numberOfCards = 0;
+            _numberOfSuits = 0;
+            _cardOrderIsEqual = false;
+        }
+
         [Test]
         public void Should_have_52_cards()
         {

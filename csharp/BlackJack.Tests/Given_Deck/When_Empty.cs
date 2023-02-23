@@ -18,6 +18,12 @@ namespace BlackJack.Tests.Given_Deck
             _numberOfCards = _deck.Cards.Count;
         }
 
+        public override void TearDown()
+        {
+            _deck = null;
+            _numberOfCards = 0;
+        }
+
         [Test]
         public void Should_add_52_new_cards()
         {

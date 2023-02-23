@@ -31,8 +31,7 @@ namespace BlackJack
             if (Phase != GamePhase.Dealing)
                 yield break;
 
-            var dealtHands = new List<Hand> { _dealer.DrawCard(_deck), _player.DrawCard(_deck) };
-            foreach (var hand in dealtHands)
+            foreach (var hand in new List<Hand> { _dealer.DrawCard(_deck), _player.DrawCard(_deck) })
                 yield return hand;
 
             Phase = GamePhase.PlayersTurn;
