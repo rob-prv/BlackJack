@@ -1,4 +1,7 @@
-﻿namespace BlackJack
+﻿using BlackJack.Game.Deck;
+using BlackJack.Game.Participants.Hands;
+
+namespace BlackJack.Game.Participants
 {
     public class Player : IPlayer
     {
@@ -9,7 +12,7 @@
             Hand = hand;
         }
 
-        public Hand DrawCard(Deck deck)
+        public Hand DrawCard(IDeck deck)
         {
             var updatedHand = Hand.AddCard(deck.DrawCard());
             return updatedHand;

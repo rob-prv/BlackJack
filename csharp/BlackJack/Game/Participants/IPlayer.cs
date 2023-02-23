@@ -1,4 +1,6 @@
-﻿namespace BlackJack
+﻿using BlackJack.Game.Participants.Hands;
+
+namespace BlackJack.Game.Participants
 {
     public interface IPlayer : IParticipant
     {

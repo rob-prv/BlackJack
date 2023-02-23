@@ -1,10 +1,11 @@
-﻿using NUnit.Framework;
+﻿using BlackJack.Game.Deck;
+using NUnit.Framework;
 
 namespace BlackJack.Tests.Given_Deck
 {
     public class When_Empty : Scenario
     {
-        private Deck _deck;
+        private IDeck _deck;
         private int _numberOfCards;
 
         public override void Given()

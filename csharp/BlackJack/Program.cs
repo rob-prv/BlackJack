@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Threading;
+using BlackJack.Game;
+using BlackJack.Game.Deck;
+using BlackJack.Game.Participants;
+using BlackJack.Game.Participants.Hands;
 
 namespace BlackJack
 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using BlackJack.Game.Participants.Hands;
 
-namespace BlackJack
+namespace BlackJack.Game.Participants
 {
     public interface IDealer : IParticipant
     {

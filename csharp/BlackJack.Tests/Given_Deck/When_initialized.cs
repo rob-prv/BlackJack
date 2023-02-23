@@ -1,14 +1,15 @@
-﻿using NUnit.Framework;
+﻿using BlackJack.Game.Deck;
+using NUnit.Framework;
 using System.Linq;
 
 namespace BlackJack.Tests.Given_Deck
 {
     public class When_Initialized : Scenario
     {
-        private Deck _deck;
+        private IDeck _deck;
         private int _numberOfCards;
         private int _numberOfSuits;
-        private Deck _deckTwo;
+        private IDeck _deckTwo;
         private bool _cardOrderIsEqual;
 
         public override void Given()

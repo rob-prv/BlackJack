@@ -1,7 +1,8 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BlackJack.Game;
+using BlackJack.Game.Deck;
+using BlackJack.Game.Participants;
+using BlackJack.Game.Participants.Hands;
+using NUnit.Framework;
 
 namespace BlackJack.Tests.Given_Game
 {

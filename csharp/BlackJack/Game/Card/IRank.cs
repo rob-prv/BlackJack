@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BlackJack
+namespace BlackJack.Game.Card
 {
-    public enum PlayerAction
+    public interface IRank
     {
-        Hit, Stand, Unknown
+        int Value { get; }
     }
 }

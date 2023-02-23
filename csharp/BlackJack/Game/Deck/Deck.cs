@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BlackJack.Game.Card;
 
-namespace BlackJack
+namespace BlackJack.Game.Deck
 {
-    public class Deck
+    public class Deck : IDeck
     {
         private readonly Random _rng = new Random();
-        private  List<Card> _cards = new List<Card>();
+        private List<ICard> _cards = new List<ICard>();
 
-        public List<Card> Cards
+        public List<ICard> Cards
         {
             get
             {
@@ -35,13 +36,13 @@ namespace BlackJack
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
                 for (int i = 2; i < 15; i++)
-                    _cards.Add(new Card(new Rank(i), i, suit));
+                    _cards.Add(new Card.Card(new Rank(i), i, suit));
             }
 
             Shuffle();
         }
 
-        public Card DrawCard()
+        public ICard DrawCard()
         {
             var card = _cards.FirstOrDefault();
             _cards.Remove(card);

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
-namespace BlackJack
+﻿namespace BlackJack.Game.Card
 {
-    public class Rank
+    public class Rank : IRank
     {
         private int _value;
         public int Value => _value;

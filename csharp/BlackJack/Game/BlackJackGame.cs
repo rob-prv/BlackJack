@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BlackJack.Game.Deck;
+using BlackJack.Game.Participants;
+using BlackJack.Game.Participants.Hands;
 
-namespace BlackJack
+namespace BlackJack.Game
 {
     public class BlackJackGame
     {
         public GamePhase Phase { get; private set; }
         private readonly IDealer _dealer;
         private readonly IPlayer _player;
-        private readonly Deck _deck;
+        private readonly IDeck _deck;
 
-        public BlackJackGame(IDealer dealer, IPlayer player, Deck deck)
+        public BlackJackGame(IDealer dealer, IPlayer player, IDeck deck)
         {
             _dealer = dealer;
             _player = player;
@@ -45,7 +48,7 @@ namespace BlackJack
                 .ToList();
 
             var totals = possibleWinners.Select(h => h.Total).ToList();
-            if (!totals.Any() || (totals.Count > 1 && totals.ElementAt(0).Equals(totals.ElementAt(1))))
+            if (!totals.Any() || totals.Count > 1 && totals.ElementAt(0).Equals(totals.ElementAt(1)))
                 return "It's a tie!";
             else
                 return possibleWinners.First().GetType() == typeof(PlayerHand) ? "You won!" : "Dealer won.";
@@ -74,7 +77,7 @@ namespace BlackJack
 
         private void UpdateGamePhase(Hand hand)
         {
-            if(!(hand is { IsClosed: true })) 
+            if (!(hand is { IsClosed: true }))
                 return;
 
             if (hand.BlackJack)

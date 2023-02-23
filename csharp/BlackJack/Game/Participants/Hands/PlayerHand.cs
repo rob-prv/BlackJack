@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace BlackJack
+namespace BlackJack.Game.Participants.Hands
 {
     public class PlayerHand : Hand
     {

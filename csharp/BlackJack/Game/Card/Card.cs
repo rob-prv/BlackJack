@@ -1,12 +1,12 @@
-﻿namespace BlackJack
+﻿namespace BlackJack.Game.Card
 {
-    public class Card
+    public class Card : ICard
     {
         public Suit Suit { get; }
         public int Value { get; }
-        public Rank Rank { get; }
+        public IRank Rank { get; }
 
-        public Card(Rank rank, int value, Suit suit)
+        public Card(IRank rank, int value, Suit suit)
         {
             Rank = rank;
             Value = value;
