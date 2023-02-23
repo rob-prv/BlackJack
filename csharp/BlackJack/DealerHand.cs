@@ -5,8 +5,8 @@ namespace BlackJack
 {
     public class DealerHand : Hand
     {
-        public override bool IsClosed => Cards.Sum(c => Math.Min(c.Rank, 11)) >= 17;
-
+        public override bool IsClosed => Cards.Sum(c => Math.Min(c.Rank.HandValue, 11)) >= 17 || IsFat;
+        public override bool ManualStand => false; 
         public override string ToString()
         {
             if (BlackJack)

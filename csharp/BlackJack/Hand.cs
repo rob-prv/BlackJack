@@ -6,40 +6,30 @@ namespace BlackJack
 {
     public abstract class Hand
     {
-        protected Card LastDrawnCard { get; set; }
+        private Card _lastDrawnCard;
+        protected Card LastDrawnCard => _lastDrawnCard;
         public List<Card> Cards { get; } = new List<Card>();
-        public int Total => Cards.Sum(c => Math.Min(c.Rank, 11));
-        public virtual bool IsClosed { get; }
-        public bool BlackJack => Cards.Sum(c => Math.Min(c.Rank, 11)) == 21;
-        public bool IsFat => Cards.Sum(c => Math.Min(c.Rank, 11)) > 21;
+        public int Total => Cards.Sum(c => Math.Min(c.Rank.HandValue, 11));
+        public bool BlackJack => Cards.Sum(c => Math.Min(c.Rank.HandValue, 11)) == 21;
+        public bool IsFat => Cards.Sum(c => Math.Min(c.Rank.HandValue, 11)) > 21;
+        public abstract bool ManualStand{ get; }
+        public abstract bool IsClosed { get; }
 
         public Hand AddCard(Card card)
         {
             if (IsClosed)
                 return this;
 
-            DecideValueOfAce(card);
             Cards.Add(card);
-            LastDrawnCard = card;
+            _lastDrawnCard = card;
 
             return this;
         }
 
-        public void ClearHand()
+        public virtual void ClearHand()
         {
             Cards.Clear();
-            LastDrawnCard = null;
-        }
-
-        private void DecideValueOfAce(Card card)
-        {
-            if (card.Rank != 14)
-                return;
-
-            if(Total + card.Rank > 21)
-                card.Rank = 11;
-            else
-                card.Rank = 1;
+            _lastDrawnCard = null;
         }
     }
 }

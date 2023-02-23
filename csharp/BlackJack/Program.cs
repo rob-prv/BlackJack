@@ -7,8 +7,7 @@ namespace BlackJack
     {
         static void Main()
         {
-            var game = new BlackJackGame(new Dealer(new Deck(), new DealerHand(), new Player(new PlayerHand()))); 
-            // more ideal with factory
+            var game = new BlackJackGame(new Dealer( new DealerHand()), new Player(new PlayerHand()), new Deck());
 
             while (game.Phase != GamePhase.Finished)
             {
@@ -25,11 +24,7 @@ namespace BlackJack
                     action = PlayerAction.Hit;
 
                 var updatedHand = game.HitOrStand(action);
-
-                if (updatedHand?.BlackJack == true)
-                    Console.WriteLine(updatedHand);
-
-                else if (updatedHand?.BlackJack == false)
+                if (!updatedHand.ManualStand)
                     Console.WriteLine(updatedHand);
 
                 if (game.Phase == GamePhase.Finished)

@@ -2,14 +2,8 @@
 
 namespace BlackJack
 {
-    public interface IDealer
+    public interface IDealer : IParticipant
     {
-        Deck Deck { get; }
-        DealerHand DealerHand { get; }
-        public List<Hand> DealCards();
-        IPlayer Player { get; }
-        Hand DrawPlayerCard();
-        Hand DrawDealerCard();
-        void ResetHands();
+        DealerHand Hand { get; }
     }
 }

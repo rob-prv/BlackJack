@@ -34,10 +34,8 @@ namespace BlackJack
         {
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
-                for (int i = 1; i < 14; i++)
-                {
-                    _cards.Add(new Card() { Rank = i, Suit = suit });
-                }
+                for (int i = 2; i < 15; i++)
+                    _cards.Add(new Card(new Rank(i), i, suit));
             }
 
             Shuffle();

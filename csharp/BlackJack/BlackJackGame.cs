@@ -4,21 +4,26 @@ using System.Linq;
 
 namespace BlackJack
 {
-    public enum GamePhase { Dealing, PlayersTurn, DealersTurn, Finished }
     public class BlackJackGame
     {
         public GamePhase Phase { get; private set; }
         private readonly IDealer _dealer;
-        public BlackJackGame(IDealer dealer)
+        private readonly IPlayer _player;
+        private readonly Deck _deck;
+
+        public BlackJackGame(IDealer dealer, IPlayer player, Deck deck)
         {
             _dealer = dealer;
+            _player = player;
+            _deck = deck;
             Phase = GamePhase.Dealing;
         }
 
         public void Restart()
         {
             Phase = GamePhase.Dealing;
-            _dealer.ResetHands();
+            _dealer.ResetHand();
+            _player.ResetHand();
         }
 
         public IEnumerable<Hand> StartDealing()
@@ -26,7 +31,8 @@ namespace BlackJack
             if (Phase != GamePhase.Dealing)
                 yield break;
 
-            foreach (var hand in _dealer.DealCards())
+            var dealtHands = new List<Hand> { _dealer.DrawCard(_deck), _player.DrawCard(_deck) };
+            foreach (var hand in dealtHands)
                 yield return hand;
 
             Phase = GamePhase.PlayersTurn;
@@ -34,7 +40,7 @@ namespace BlackJack
 
         public string GetWinner()
         {
-            var possibleWinners = new List<Hand> { _dealer.DealerHand, _dealer.Player.Hand }
+            var possibleWinners = new List<Hand> { _dealer.Hand, _player.Hand }
                 .Where(h => !h.IsFat)
                 .OrderBy(h => Math.Abs(h.Total - 21))
                 .ToList();
@@ -53,15 +59,15 @@ namespace BlackJack
             Hand updatedHand;
             if (action == PlayerAction.Stand)
             {
-                updatedHand = _dealer.Player.CloseHand();
+                updatedHand = _player.CloseHand();
                 UpdateGamePhase(updatedHand);
-                return null;
+                return updatedHand;
             }
 
             if (Phase == GamePhase.PlayersTurn)
-                updatedHand = _dealer.DrawPlayerCard();
+                updatedHand = _player.DrawCard(_deck);
             else
-                updatedHand = _dealer.DrawDealerCard();
+                updatedHand = _dealer.DrawCard(_deck);
 
             UpdateGamePhase(updatedHand);
             return updatedHand;
@@ -69,6 +75,12 @@ namespace BlackJack
 
         private void UpdateGamePhase(Hand hand)
         {
+            if(hand.BlackJack)
+            {
+                Phase = GamePhase.Finished;
+                return;
+            }
+
             if (hand is { IsClosed: false })
                 return;
 
@@ -78,21 +90,13 @@ namespace BlackJack
                 return;
             }
 
-            switch (Phase)
+            Phase = Phase switch
             {
-                case GamePhase.Dealing:
-                    Phase = GamePhase.PlayersTurn;
-                    break;
-                case GamePhase.PlayersTurn:
-                    Phase = GamePhase.DealersTurn;
-                    break;
-                case GamePhase.DealersTurn:
-                    Phase = GamePhase.Finished;
-                    break;
-            }
+                GamePhase.Dealing => GamePhase.PlayersTurn,
+                GamePhase.PlayersTurn => GamePhase.DealersTurn,
+                GamePhase.DealersTurn => GamePhase.Finished,
+                _ => Phase
+            };
         }
-
-
-
     }
 }

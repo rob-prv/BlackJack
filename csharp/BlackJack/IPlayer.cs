@@ -1,7 +1,7 @@
 ﻿namespace BlackJack
 {
-    public interface IPlayer
-    { 
+    public interface IPlayer : IParticipant
+    {
         PlayerHand Hand { get; }
         Hand CloseHand();
     }
