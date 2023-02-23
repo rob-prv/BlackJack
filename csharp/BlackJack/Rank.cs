@@ -9,8 +9,8 @@ namespace BlackJack
 {
     public class Rank
     {
-        private int _handValue;
-        public int HandValue => _handValue;
+        private int _value;
+        public int Value => _value;
 
         public Rank(int value)
         {
@@ -19,7 +19,7 @@ namespace BlackJack
 
         private void SetHandValue(int value)
         {
-            _handValue = value switch
+            _value = value switch
             {
                 11 => 10,
                 12 => 10,

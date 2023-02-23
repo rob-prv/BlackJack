@@ -21,7 +21,7 @@
                 12 => "Q of " + Suit,
                 13 => "K of " + Suit,
                 14 => "A of " + Suit,
-                _ => Rank.HandValue + " of " + Suit
+                _ => Rank.Value + " of " + Suit
             };
         }
     }

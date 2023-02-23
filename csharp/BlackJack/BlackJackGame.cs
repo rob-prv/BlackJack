@@ -75,28 +75,21 @@ namespace BlackJack
 
         private void UpdateGamePhase(Hand hand)
         {
-            if(hand.BlackJack)
-            {
-                Phase = GamePhase.Finished;
-                return;
-            }
-
-            if (hand is { IsClosed: false })
+            if(!(hand is { IsClosed: true })) 
                 return;
 
             if (hand.BlackJack)
-            {
                 Phase = GamePhase.Finished;
-                return;
-            }
-
-            Phase = Phase switch
+            else
             {
-                GamePhase.Dealing => GamePhase.PlayersTurn,
-                GamePhase.PlayersTurn => GamePhase.DealersTurn,
-                GamePhase.DealersTurn => GamePhase.Finished,
-                _ => Phase
-            };
+                Phase = Phase switch
+                {
+                    GamePhase.Dealing => GamePhase.PlayersTurn,
+                    GamePhase.PlayersTurn => GamePhase.DealersTurn,
+                    GamePhase.DealersTurn => GamePhase.Finished,
+                    _ => Phase
+                };
+            }
         }
     }
 }

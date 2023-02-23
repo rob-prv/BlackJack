@@ -7,7 +7,7 @@ namespace BlackJack
     public class Deck
     {
         private readonly Random _rng = new Random();
-        private List<Card> _cards = new List<Card>();
+        private  List<Card> _cards = new List<Card>();
 
         public List<Card> Cards
         {
